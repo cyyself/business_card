@@ -1,0 +1,116 @@
+%% This example is adapted from the "Business Cards for Programmers/Developers" example at 
+% https://www.overleaf.com/latex/templates/business-cards-for-programmers-slash-developers/wrwgsnnmxwyg.
+
+% Instructions are at the end of the file.
+
+\documentclass[11pt,a4paper]{memoir}
+
+\setstocksize{55mm}{85mm} % UK Stock size
+\setpagecc{55mm}{85mm}{*}
+\settypeblocksize{45mm}{75mm}{*}
+\setulmargins{5mm}{*}{*}
+\setlrmargins{5mm}{*}{*}
+\usepackage{xcolor}
+
+\usepackage{datatool}
+%% The "database" is a comma-separated values (CSV) file.
+%% The first line should contain the column headers, without space characters, e.g.
+%% Name,JobTitle,Department
+%%
+%% If a field value contains a comma, then the field value needs to be surrounded with double quotes, e.g. 
+%% John Smith,Lecturer,"School of Science, Mathematics and Engineering"
+%%
+%% Spreadsheet applications can usually export such a .csv file.
+%%
+%% If field values are expected to contain LaTeX special characters like $, &, then use \DTLloadrawdb{data}.csv instead.
+\DTLloaddb{namelist}{data.csv}
+
+\setheadfoot{0.1pt}{0.1pt}
+\setheaderspaces{1pt}{*}{*}
+\usepackage{fontspec}
+\setmainfont{EB Garamond} 
+
+\checkandfixthelayout[fixed]
+
+\pagestyle{empty}
+
+
+\usepackage{pstricks}
+\usepackage{auto-pst-pdf,pst-barcode}
+
+
+%% These packages only for typesetting the instructions
+\usepackage{listings}
+\usepackage{enumitem}
+
+
+\begin{document}
+
+%% For each line in namelist (which was loaded from data.csv), 
+%% output the following text (with mailmerged field values)
+\DTLforeach{namelist}{%
+    %% Map each column header in your .csv file to a command
+	\Name=Name,%
+    \Subtitle=Subtitle,%
+    \Division=Division,%
+    \Employer=Employer,%
+    \JobTitle=JobTitle,%
+    \SpecialityOne=Speciality1,%
+    \SpecialityTwo=Speciality2,%
+    \SpecialityThree=Speciality3,%
+    \Web=Web,%
+    \EmailOne=Email1,%
+    \EmailTwo=Email2,%
+    \Mobile=Mobile,%
+    \GPG=GPG%
+}{%%%  Start designing your output text! 
+  %%%  Mailmerged field values can be inserted using the commands
+  %%%  you've just mapped above.
+    \begin{Spacing}{0.75}%
+    \noindent
+    \textbf{\Name}\\[3pt]
+    \tiny\mbox{}\Subtitle \hfill {\color{gray}\Division{} / \Employer}\\ 
+    \rule{\textwidth}{.3mm}\\
+    \begin{minipage}[t]{30mm}
+        \vspace{-0mm}%
+        \begin{pspicture}(25mm,25mm)
+            % The MECARD format is used to exchange contact information. More information at:
+            % https://www.nttdocomo.co.jp/english/service/developer/make/content/barcode/function/application/addressbook/index.html
+\psbarcode{MECARD:N:\Name;URL:\Web;EMAIL:\EmailOne;TEL:\Mobile;NOTE:GPG key fingerprint: \GPG;}{eclevel=L width=1 height=1}{qrcode}
+
+        \end{pspicture}
+    \end{minipage}
+    \hspace{1mm}
+    \begin{minipage}[t]{42mm}
+        \vspace{-0mm}%
+        \begin{flushleft}
+        {\scriptsize
+            \begin{Spacing}{1}%
+            \textbf{\JobTitle}\\
+            \hspace{5mm}\mbox{}\SpecialityOne\\
+            \hspace{5mm}\mbox{}\SpecialityTwo\\
+            \hspace{5mm}\mbox{}\SpecialityThree \vspace{2mm}\\
+            \end{Spacing}
+        }
+        {\tiny
+        	\begin{tabular}{@{}r@{\hspace{2mm}}l}
+            	{\color{gray}web} & \Web\\
+            	{\color{gray}email} & \EmailOne\\
+            	{\color{gray}email} & \EmailTwo\\
+            	{\color{gray}mobile} & \Mobile\\
+            \end{tabular}
+            \vspace*{2mm}
+        }
+        \end{flushleft}
+    \end{minipage}
+    \rule{74mm}{0mm}\\
+    \texttt{\fontsize{2.84mm}{3.55mm}\selectfont \GPG} % GPG KEY ID
+    \end{Spacing}
+    \clearpage
+}
+
+%% Comment out this line when typesetting for final output
+\input{instructions}
+
+
+\end{document}

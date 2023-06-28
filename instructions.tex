@@ -1,0 +1,20 @@
+\lstset{language={[LaTeX]TeX}, basicstyle=\ttfamily\tiny,commentstyle=\color{gray!80!black}, columns=flexible}
+\noindent{\small Template Instructions}
+\begin{itemize}[leftmargin=0pt,topsep=6pt,itemsep=1pt]
+\tiny
+\item Place your data in \texttt{data.csv}. This might be exported from a spreadsheet program. The first line should contain the field headers -- avoid space characters. 
+
+\item Load the data file with \verb|\DTLloaddb{data}{data.csv}|.\\ Use \verb|\DTLloadrawdb{data}{data.csv}| if you expect it to contain special characters like \verb|$|, \verb|&|.
+
+\item Design your card/document. Use the mapped commands to insert fields.
+\begin{lstlisting}
+\DTLforeach{data}{% for each row of data:
+    \Name=Name,   % Map each column header to a command
+    \Email=Email, ...}{
+    % Use these mapped commands to insert field values, e.g.
+    Delegate name: \Name <\Email>  
+}
+\end{lstlisting}
+\end{itemize}
+
+\clearpage
