@@ -58,9 +58,10 @@
     \SpecialityOne=Speciality1,%
     \SpecialityTwo=Speciality2,%
     \SpecialityThree=Speciality3,%
+    \SpecialityFour=Speciality4,%
     \Web=Web,%
-    \EmailOne=Email1,%
-    \EmailTwo=Email2,%
+    \Email=Email,%
+    \Github=GitHub,%
     \Mobile=Mobile,%
     \GPG=GPG%
 }{%%%  Start designing your output text! 
@@ -69,15 +70,11 @@
     \begin{Spacing}{0.75}%
     \noindent
     \textbf{\Name}\\[3pt]
-    \tiny\mbox{}\Subtitle \hfill {\color{gray}\Division{} / \Employer}\\ 
     \rule{\textwidth}{.3mm}\\
     \begin{minipage}[t]{30mm}
         \vspace{-0mm}%
         \begin{pspicture}(25mm,25mm)
-            % The MECARD format is used to exchange contact information. More information at:
-            % https://www.nttdocomo.co.jp/english/service/developer/make/content/barcode/function/application/addressbook/index.html
-\psbarcode{MECARD:N:\Name;URL:\Web;EMAIL:\EmailOne;TEL:\Mobile;NOTE:GPG key fingerprint: \GPG;}{eclevel=L width=1 height=1}{qrcode}
-
+            \includegraphics[width=25mm]{MYOT.jpg}
         \end{pspicture}
     \end{minipage}
     \hspace{1mm}
@@ -87,16 +84,17 @@
         {\scriptsize
             \begin{Spacing}{1}%
             \textbf{\JobTitle}\\
-            \hspace{5mm}\mbox{}\SpecialityOne\\
-            \hspace{5mm}\mbox{}\SpecialityTwo\\
-            \hspace{5mm}\mbox{}\SpecialityThree \vspace{2mm}\\
+            \hspace{1mm}\mbox{}{ \tiny \SpecialityOne }\\
+            \hspace{1mm}\mbox{}{ \tiny  \SpecialityTwo }\\
+            \hspace{1mm}\mbox{}{ \tiny  \SpecialityThree }\\
+            \hspace{1mm}\mbox{}{ \tiny  \SpecialityFour }\\
             \end{Spacing}
         }
         {\tiny
         	\begin{tabular}{@{}r@{\hspace{2mm}}l}
             	{\color{gray}web} & \Web\\
-            	{\color{gray}email} & \EmailOne\\
-            	{\color{gray}email} & \EmailTwo\\
+            	{\color{gray}email} & \Email\\
+            	{\color{gray}github} & https://github.com/\Github\\
             	{\color{gray}mobile} & \Mobile\\
             \end{tabular}
             \vspace*{2mm}
@@ -108,9 +106,6 @@
     \end{Spacing}
     \clearpage
 }
-
-%% Comment out this line when typesetting for final output
-\input{instructions}
 
 
 \end{document}
